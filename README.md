@@ -55,7 +55,7 @@ print(string.format('%.9f',res)) -- 0.000001000
 
 **Parameters**
 
-- `clock_id:integer`: value of clock_id constants. (default `clock.MONOTONIC`)
+- `clock_id:integer`: value of clock_id constants. (default `CLOCK_MONOTONIC`)
 - `as_int:boolean`: get the value as an integer.
 
 **Returns**
@@ -78,7 +78,7 @@ print(string.format('%d',isec))   --  1531570802740000
 
 **Parameters**
 
-- `clock_id:integer`: value of clock_id constants. (default `clock.MONOTONIC`)
+- `clock_id:integer`: value of clock_id constants. (default `CLOCK_MONOTONIC`)
 - `as_int:boolean`: get the value as an integer.
 
 **Returns**
