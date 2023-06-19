@@ -62,7 +62,7 @@ static int getres_lua(lua_State *L)
     return 1;
 }
 
-LUALIB_API int luaopen_clock(lua_State *L)
+LUALIB_API int luaopen_time_clock(lua_State *L)
 {
     lua_errno_loadlib(L);
 

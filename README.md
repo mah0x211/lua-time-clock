@@ -1,7 +1,7 @@
-# lua-clock
+# lua-time-clock
 
-[![test](https://github.com/mah0x211/lua-clock/actions/workflows/test.yml/badge.svg)](https://github.com/mah0x211/lua-clock/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/mah0x211/lua-clock/branch/master/graph/badge.svg)](https://codecov.io/gh/mah0x211/lua-clock)
+[![test](https://github.com/mah0x211/lua-time-clock/actions/workflows/test.yml/badge.svg)](https://github.com/mah0x211/lua-time-clock/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/mah0x211/lua-time-clock/branch/master/graph/badge.svg)](https://codecov.io/gh/mah0x211/lua-time-clock)
 
 clock and time functions.
 
@@ -9,7 +9,7 @@ clock and time functions.
 ## Installation
 
 ```
-luarocks install clock
+luarocks install time-clock
 ```
 
 ## Constants
@@ -48,7 +48,7 @@ the following functions return the `error` object created by https://github.com/
 get the resolution of the specified clock `clock_id`.
 
 ```lua
-local clock = require('clock')
+local clock = require('time.clock')
 local res = clock.getres()
 print(string.format('%.9f',res)) -- 0.000001000
 ```
@@ -69,7 +69,7 @@ print(string.format('%.9f',res)) -- 0.000001000
 get the time of the specified clock `clock_id`.
 
 ```lua
-local clock = require('clock')
+local clock = require('time.clock')
 local nsec = clock.gettime()
 local isec = clock.gettime(nil, true)
 print(string.format('%.9f',nsec)) -- 1531570.802726000

@@ -4,7 +4,7 @@ OBJS=$(SRCS:.c=.o)
 GCDAS=$(OBJS:.o=.gcda)
 INSTALL?=install
 
-ifdef CLOCK_COVERAGE
+ifdef TIME_CLOCK_COVERAGE
 COVFLAGS=--coverage
 endif
 
@@ -19,6 +19,6 @@ $(TARGET): $(OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS) $(PLATFORM_LDFLAGS) $(COVFLAGS)
 
 install:
-	$(INSTALL) -d $(INST_LIBDIR)
-	$(INSTALL) $(TARGET) $(INST_LIBDIR)
+	$(INSTALL) -d $(INST_LIBDIR)/time/
+	$(INSTALL) $(TARGET) $(INST_LIBDIR)/time/
 	rm -f $(OBJS) $(TARGET) $(GCDAS)
