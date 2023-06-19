@@ -1,6 +1,6 @@
 local assert = require('assert')
 local errno = require('errno')
-local clock = require('clock')
+local clock = require('time.clock')
 
 local AVAILABLE_CLOCK_IDS = {}
 for _, cid in ipairs({
