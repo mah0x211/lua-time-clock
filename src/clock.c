@@ -26,22 +26,35 @@
 
 #define NSEC 1000000000
 
-static int gettime_lua(lua_State *L)
+typedef enum {
+    TIME_CLOCK_NSEC = 0,
+    TIME_CLOCK_USEC,
+    TIME_CLOCK_MSEC,
+    TIME_CLOCK_SEC,
+} time_clock_unit_t;
+
+static int gettime_as(lua_State *L, time_clock_unit_t unit)
 {
     clockid_t clk_id   = lauxh_optinteger(L, 1, CLOCK_MONOTONIC);
-    int as_int         = lauxh_optboolean(L, 2, 0);
     struct timespec ts = {0};
 
     if (clock_gettime(clk_id, &ts)) {
         lua_pushnil(L);
         lua_errno_new(L, errno, "clock.getres");
         return 2;
-    } else if (as_int) {
-        lua_pushinteger(L, (uint64_t)ts.tv_sec * NSEC + (uint64_t)ts.tv_nsec);
-    } else {
-        lua_pushnumber(L, (double)ts.tv_sec + ((double)ts.tv_nsec / NSEC));
     }
-    return 1;
+
+    switch (unit) {
+    // case TIME_CLOCK_SEC:
+    default:
+        lua_pushnumber(L, (double)ts.tv_sec + ((double)ts.tv_nsec / NSEC));
+        return 1;
+    }
+}
+
+static int gettime_lua(lua_State *L)
+{
+    return gettime_as(L, TIME_CLOCK_SEC);
 }
 
 static int getres_lua(lua_State *L)
