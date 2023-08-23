@@ -84,6 +84,26 @@ print(sec) -- 1531570.802726
 - `err:error`: error object.
 
 
+## res, err = clock.getmsec( [clock_id] )
+
+get the time of the specified clock `clock_id` as milliseconds.
+
+```lua
+local clock = require('time.clock')
+local nsec = clock.getmsec()
+print(nsec) -- 1531570802
+```
+
+**Parameters**
+
+- `clock_id:integer`: value of clock_id constants. (default `CLOCK_MONOTONIC`)
+
+**Returns**
+
+- `res:integer`: the time of the clock specified by `clock_id` as milliseconds.
+- `err:error`: error object.
+
+
 ## res, err = clock.getusec( [clock_id] )
 
 get the time of the specified clock `clock_id` as microseconds.

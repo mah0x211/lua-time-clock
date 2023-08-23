@@ -56,6 +56,11 @@ static int gettime_as(lua_State *L, time_clock_unit_t unit)
                                (uint64_t)ts.tv_nsec / MSEC);
         return 1;
 
+    case TIME_CLOCK_MSEC:
+        lua_pushinteger(L, (uint64_t)ts.tv_sec * MSEC +
+                               (uint64_t)ts.tv_nsec / USEC);
+        return 1;
+
     // case TIME_CLOCK_SEC:
     default:
         lua_pushnumber(L, (double)ts.tv_sec + ((double)ts.tv_nsec / NSEC));
@@ -71,6 +76,11 @@ static int getnsec_lua(lua_State *L)
 static int getusec_lua(lua_State *L)
 {
     return gettime_as(L, TIME_CLOCK_USEC);
+}
+
+static int getmsec_lua(lua_State *L)
+{
+    return gettime_as(L, TIME_CLOCK_MSEC);
 }
 
 static int gettime_lua(lua_State *L)
@@ -106,6 +116,7 @@ LUALIB_API int luaopen_time_clock(lua_State *L)
     // export functions
     lauxh_pushfn2tbl(L, "getres", getres_lua);
     lauxh_pushfn2tbl(L, "gettime", gettime_lua);
+    lauxh_pushfn2tbl(L, "getmsec", getmsec_lua);
     lauxh_pushfn2tbl(L, "getusec", getusec_lua);
     lauxh_pushfn2tbl(L, "getnsec", getnsec_lua);
 
