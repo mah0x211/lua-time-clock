@@ -24,7 +24,9 @@
 #include <lauxhlib.h>
 #include <lua_errno.h>
 
-#define NSEC 1000000000
+#define NSEC 1000000000ULL
+#define USEC 1000000ULL
+#define MSEC 1000ULL
 
 typedef enum {
     TIME_CLOCK_NSEC = 0,
@@ -49,6 +51,11 @@ static int gettime_as(lua_State *L, time_clock_unit_t unit)
         lua_pushinteger(L, (uint64_t)ts.tv_sec * NSEC + (uint64_t)ts.tv_nsec);
         return 1;
 
+    case TIME_CLOCK_USEC:
+        lua_pushinteger(L, (uint64_t)ts.tv_sec * USEC +
+                               (uint64_t)ts.tv_nsec / MSEC);
+        return 1;
+
     // case TIME_CLOCK_SEC:
     default:
         lua_pushnumber(L, (double)ts.tv_sec + ((double)ts.tv_nsec / NSEC));
@@ -59,6 +66,11 @@ static int gettime_as(lua_State *L, time_clock_unit_t unit)
 static int getnsec_lua(lua_State *L)
 {
     return gettime_as(L, TIME_CLOCK_NSEC);
+}
+
+static int getusec_lua(lua_State *L)
+{
+    return gettime_as(L, TIME_CLOCK_USEC);
 }
 
 static int gettime_lua(lua_State *L)
@@ -94,6 +106,7 @@ LUALIB_API int luaopen_time_clock(lua_State *L)
     // export functions
     lauxh_pushfn2tbl(L, "getres", getres_lua);
     lauxh_pushfn2tbl(L, "gettime", gettime_lua);
+    lauxh_pushfn2tbl(L, "getusec", getusec_lua);
     lauxh_pushfn2tbl(L, "getnsec", getnsec_lua);
 
     // export options
