@@ -77,9 +77,19 @@ local function test_gettime()
     assert.equal(err.type, errno.EINVAL)
 end
 
+local function test_getnsec()
+    for _, id in pairs(AVAILABLE_CLOCK_IDS) do
+        -- test that get time as nsec
+        local res, err = assert(clock.getnsec(id))
+        assert.is_uint(res)
+        assert.is_nil(err)
+    end
+end
+
 for name, f in pairs({
     test_getres = test_getres,
     test_gettime = test_gettime,
+    test_getnsec = test_getnsec,
 }) do
     local ok, err = xpcall(f, debug.traceback)
     if ok then
