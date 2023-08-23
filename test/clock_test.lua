@@ -64,11 +64,6 @@ local function test_gettime()
         local iv, fv = math.modf(res)
         assert.greater(fv, 0)
         assert.equal(res, iv + fv)
-
-        -- test that get time as integer
-        res, err = assert(clock.gettime(id, true))
-        assert.is_uint(res)
-        assert.is_nil(err)
     end
 
     -- test that get resolution of clock with default clock_id=MONOTONIC

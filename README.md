@@ -64,25 +64,22 @@ print(string.format('%.9f',res)) -- 0.000001000
 - `err:error`: error object.
 
 
-## res, err = clock.gettime( [clock_id [, as_int]] )
+## res, err = clock.gettime( [clock_id] )
 
 get the time of the specified clock `clock_id`.
 
 ```lua
 local clock = require('time.clock')
-local nsec = clock.gettime()
-local isec = clock.gettime(nil, true)
-print(string.format('%.9f',nsec)) -- 1531570.802726000
-print(string.format('%d',isec))   --  1531570802740000
+local sec = clock.gettime()
+print(string.format('%.9f', sec)) -- 1531570.802726000
 ```
 
 **Parameters**
 
 - `clock_id:integer`: value of clock_id constants. (default `CLOCK_MONOTONIC`)
-- `as_int:boolean`: get the value as an integer.
 
 **Returns**
 
-- `res:number|integer`: the resolution of a clock.
+- `res:number`: get the time of the clock specified by `clock_id`.
 - `err:error`: error object.
 
