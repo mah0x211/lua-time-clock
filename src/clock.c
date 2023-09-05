@@ -19,14 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-#include <time.h>
-// lua
-#include <lauxhlib.h>
-#include <lua_errno.h>
-
-#define NSEC 1000000000ULL
-#define USEC 1000000ULL
-#define MSEC 1000ULL
+#include "lua_clock.h"
 
 typedef enum {
     TIME_CLOCK_NSEC = 0,

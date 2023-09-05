@@ -61,7 +61,7 @@ print(string.format('%.9f',res)) -- 0.000001000
 **Returns**
 
 - `res:number|integer`: the resolution of a clock.
-- `err:error`: error object.
+- `err:any`: error object.
 
 
 ## res, err = clock.gettime( [clock_id] )
@@ -81,7 +81,7 @@ print(sec) -- 1531570.802726
 **Returns**
 
 - `res:number`: the time of the clock specified by `clock_id` as seconds.
-- `err:error`: error object.
+- `err:any`: error object.
 
 
 ## res, err = clock.getmsec( [clock_id] )
@@ -101,7 +101,7 @@ print(nsec) -- 1531570802
 **Returns**
 
 - `res:integer`: the time of the clock specified by `clock_id` as milliseconds.
-- `err:error`: error object.
+- `err:any`: error object.
 
 
 ## res, err = clock.getusec( [clock_id] )
@@ -121,7 +121,7 @@ print(nsec) -- 1531570802726
 **Returns**
 
 - `res:integer`: the time of the clock specified by `clock_id` as microseconds.
-- `err:error`: error object.
+- `err:any`: error object.
 
 
 ## res, err = clock.getnsec( [clock_id] )
@@ -141,5 +141,46 @@ print(nsec) -- 1531570802726000
 **Returns**
 
 - `res:integer`: the time of the clock specified by `clock_id` as nanoseconds.
-- `err:error`: error object.
+- `err:any`: error object.
+
+
+## deadline, err = deadline.new( sec )
+
+create a deadline object.
+
+```lua
+local sleep = require('time.sleep')
+local deadline = require('time.clock.deadline').new
+
+local deadl = new_deadline(1.5)
+print(deadl) -- time.clock.deadline: 0x600001348088
+local sec = d:remain()
+print(sec) -- 1.499998
+sleep(1.2)
+sec = deadl:remain()
+print(sec) -- 0.294888
+sleep(0.3)
+sec = deadl:remain()
+print(sec) -- 0.0
+```
+
+
+**Parameters**
+
+- `sec:number`: the duration of the deadline in seconds.
+
+**Returns**
+
+- `deadline:time.clock.deadline`: deadline object.
+- `err:any`: error object.
+
+
+## sec, err = deadline:remain()
+
+get the remaining time of the deadline.
+
+**Returns**
+
+- `sec:number`: the remaining time of the deadline in seconds.
+- `err:any`: error object.
 
