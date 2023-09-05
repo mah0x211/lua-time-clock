@@ -177,6 +177,15 @@ print(sec) -- 0.0
 - `sec:number`: the time of the deadline in seconds.
 
 
+## sec = deadline:time()
+
+get the time of the deadline in seconds.
+
+**Returns**
+
+- `sec:number`: the time of the deadline in seconds.
+
+
 ## sec, err = deadline:remain()
 
 get the remaining time of the deadline.
