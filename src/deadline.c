@@ -79,7 +79,9 @@ static int new_lua(lua_State *L)
     }
 
     lauxh_setmetatable(L, MODULE_MT);
-    return 1;
+    lua_pushnumber(L, (double)d->deadline.tv_sec +
+                          ((double)d->deadline.tv_nsec / NSEC));
+    return 2;
 }
 
 LUALIB_API int luaopen_time_clock_deadline(lua_State *L)
