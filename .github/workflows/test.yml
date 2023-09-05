@@ -57,6 +57,7 @@ jobs:
       run: |
         sudo apt install lcov -y
         luarocks install assert
+        luarocks install time-sleep
     -
       name: Run Test
       run: |

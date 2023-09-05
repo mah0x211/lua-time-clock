@@ -1,6 +1,8 @@
 local assert = require('assert')
 local errno = require('errno')
+local sleep = require('time.sleep')
 local clock = require('time.clock')
+local new_deadline = require('time.clock.deadline').new
 
 local AVAILABLE_CLOCK_IDS = {}
 for _, cid in ipairs({
@@ -104,12 +106,33 @@ local function test_getnsec()
     end
 end
 
+local function test_deadline()
+    -- test that create time.clock.deadline instance
+    local deadline = assert(new_deadline(1.9))
+    assert.match(deadline, '^time.clock.deadline: 0x%x+$', false)
+
+    -- test that deadline:remain() returns a remain duration of deadline
+    local remain = assert(deadline:remain())
+    assert.greater(remain, 1.8)
+
+    -- test that deadline:remain() is greater than 0.1 after sleep 1.3 sec
+    sleep(1.7)
+    remain = assert(deadline:remain())
+    assert.greater(remain, 0.1)
+
+    -- test that deadline:remain() returns 0 after sleep 0.2 sec
+    sleep(0.2)
+    remain = assert(deadline:remain())
+    assert.equal(remain, 0)
+end
+
 for name, f in pairs({
     test_getres = test_getres,
     test_gettime = test_gettime,
     test_getmsec = test_getmsec,
     test_getusec = test_getusec,
     test_getnsec = test_getnsec,
+    test_deadline = test_deadline,
 }) do
     local ok, err = xpcall(f, debug.traceback)
     if ok then
