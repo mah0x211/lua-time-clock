@@ -186,12 +186,11 @@ get the time of the deadline in seconds.
 - `sec:number`: the time of the deadline in seconds.
 
 
-## sec, err = deadline:remain()
+## sec = deadline:remain()
 
 get the remaining time of the deadline.
 
 **Returns**
 
 - `sec:number`: the remaining time of the deadline in seconds.
-- `err:any`: error object.
 
