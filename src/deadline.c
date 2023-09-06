@@ -50,6 +50,15 @@ static int remain_lua(lua_State *L)
     return 1;
 }
 
+static int time_lua(lua_State *L)
+{
+    clock_deadline_t *d = luaL_checkudata(L, 1, MODULE_MT);
+
+    lua_pushnumber(L, (double)d->deadline.tv_sec +
+                          ((double)d->deadline.tv_nsec / NSEC));
+    return 1;
+}
+
 static int tostring_lua(lua_State *L)
 {
     lua_pushfstring(L, "%s: %p", MODULE_MT, lua_touserdata(L, 1));
@@ -93,6 +102,7 @@ LUALIB_API int luaopen_time_clock_deadline(lua_State *L)
             {NULL,         NULL        }
         };
         struct luaL_Reg methods[] = {
+            {"time",   time_lua  },
             {"remain", remain_lua},
             {NULL,     NULL      }
         };

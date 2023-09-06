@@ -112,6 +112,9 @@ local function test_deadline()
     assert.match(deadl, '^time.clock.deadline: 0x%x+$', false)
     assert.is_finite(t)
 
+    -- test that returns a deadline time as number
+    assert.equal(deadl:time(), t)
+
     -- test that deadline:remain() returns a remain duration of deadline
     local remain = assert(deadl:remain())
     assert.greater(remain, 1.8)
