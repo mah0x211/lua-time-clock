@@ -144,7 +144,7 @@ print(nsec) -- 1531570802726000
 - `err:any`: error object.
 
 
-## deadline, err = deadline.new( sec )
+## deadl, sec = deadline.new( sec )
 
 create a deadline object.
 
@@ -152,9 +152,11 @@ create a deadline object.
 local sleep = require('time.sleep')
 local deadline = require('time.clock.deadline').new
 
-local deadl = new_deadline(1.5)
+local deadl, sec = new_deadline(1.5)
 print(deadl) -- time.clock.deadline: 0x600001348088
-local sec = d:remain()
+print(sec)
+-- get the remaining time of the deadline
+sec = d:remain()
 print(sec) -- 1.499998
 sleep(1.2)
 sec = deadl:remain()
@@ -172,7 +174,7 @@ print(sec) -- 0.0
 **Returns**
 
 - `deadline:time.clock.deadline`: deadline object.
-- `err:any`: error object.
+- `sec:number`: the time of the deadline in seconds.
 
 
 ## sec, err = deadline:remain()

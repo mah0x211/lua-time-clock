@@ -108,21 +108,22 @@ end
 
 local function test_deadline()
     -- test that create time.clock.deadline instance
-    local deadline = assert(new_deadline(1.9))
-    assert.match(deadline, '^time.clock.deadline: 0x%x+$', false)
+    local deadl, t = assert(new_deadline(1.9))
+    assert.match(deadl, '^time.clock.deadline: 0x%x+$', false)
+    assert.is_finite(t)
 
     -- test that deadline:remain() returns a remain duration of deadline
-    local remain = assert(deadline:remain())
+    local remain = assert(deadl:remain())
     assert.greater(remain, 1.8)
 
     -- test that deadline:remain() is greater than 0.1 after sleep 1.3 sec
     sleep(1.7)
-    remain = assert(deadline:remain())
+    remain = assert(deadl:remain())
     assert.greater(remain, 0.1)
 
     -- test that deadline:remain() returns 0 after sleep 0.2 sec
     sleep(0.2)
-    remain = assert(deadline:remain())
+    remain = assert(deadl:remain())
     assert.equal(remain, 0)
 end
 
