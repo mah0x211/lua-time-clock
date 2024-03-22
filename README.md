@@ -169,7 +169,7 @@ print(sec) -- 0.0
 
 **Parameters**
 
-- `sec:number`: the duration of the deadline in seconds.
+- `sec:number`: the duration of the deadline in seconds. `<=0` means the deadline has already expired.
 
 **Returns**
 
@@ -192,5 +192,5 @@ get the remaining time of the deadline.
 
 **Returns**
 
-- `sec:number`: the remaining time of the deadline in seconds.
+- `sec:number`: the remaining time until the deadline　in seconds.
 
