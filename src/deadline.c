@@ -55,7 +55,7 @@ static int time_lua(lua_State *L)
     clock_deadline_t *d = luaL_checkudata(L, 1, MODULE_MT);
 
     lua_pushnumber(L, (double)d->deadline.tv_sec +
-                          ((double)d->deadline.tv_nsec / NSEC));
+                          (double)d->deadline.tv_nsec / NSEC_F);
     return 1;
 }
 
@@ -72,7 +72,7 @@ static int new_lua(lua_State *L)
 
     *d = (clock_deadline_t){0};
     clock_gettime(CLOCK_MONOTONIC, &d->deadline);
-    d->done = fsec < 0;
+    d->done = fsec <= 0;
 
     if (!d->done) {
         long sec  = (long)fsec;
@@ -89,7 +89,7 @@ static int new_lua(lua_State *L)
 
     lauxh_setmetatable(L, MODULE_MT);
     lua_pushnumber(L, (double)d->deadline.tv_sec +
-                          ((double)d->deadline.tv_nsec / NSEC));
+                          (double)d->deadline.tv_nsec / NSEC_F);
     return 2;
 }
 
