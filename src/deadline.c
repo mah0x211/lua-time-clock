@@ -28,10 +28,9 @@ typedef struct {
     struct timespec deadline;
 } clock_deadline_t;
 
-static int remain_lua(lua_State *L)
+static inline double get_delta(clock_deadline_t *d)
 {
-    clock_deadline_t *d = luaL_checkudata(L, 1, MODULE_MT);
-    double delta        = 0;
+    double delta = 0;
 
     if (!d->done) {
         struct timespec now = {0};
@@ -46,7 +45,20 @@ static int remain_lua(lua_State *L)
         }
     }
 
-    lua_pushnumber(L, delta);
+    return delta;
+}
+
+static int is_done_lua(lua_State *L)
+{
+    clock_deadline_t *d = luaL_checkudata(L, 1, MODULE_MT);
+    lua_pushboolean(L, !get_delta(d));
+    return 1;
+}
+
+static int remain_lua(lua_State *L)
+{
+    clock_deadline_t *d = luaL_checkudata(L, 1, MODULE_MT);
+    lua_pushnumber(L, get_delta(d));
     return 1;
 }
 
@@ -102,9 +114,10 @@ LUALIB_API int luaopen_time_clock_deadline(lua_State *L)
             {NULL,         NULL        }
         };
         struct luaL_Reg methods[] = {
-            {"time",   time_lua  },
-            {"remain", remain_lua},
-            {NULL,     NULL      }
+            {"time",    time_lua   },
+            {"remain",  remain_lua },
+            {"is_done", is_done_lua},
+            {NULL,      NULL       }
         };
 
         // push metamethods
