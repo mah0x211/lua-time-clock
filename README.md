@@ -150,20 +150,23 @@ create a deadline object.
 
 ```lua
 local sleep = require('time.sleep')
-local deadline = require('time.clock.deadline').new
+local new_deadline = require('time.clock.deadline').new
 
 local deadl, sec = new_deadline(1.5)
 print(deadl) -- time.clock.deadline: 0x600001348088
 print(sec)
+print(deadl:is_done()) -- false
 -- get the remaining time of the deadline
-sec = d:remain()
+sec = deadl:remain()
 print(sec) -- 1.499998
 sleep(1.2)
 sec = deadl:remain()
 print(sec) -- 0.294888
+print(deadl:is_done()) -- false
 sleep(0.3)
 sec = deadl:remain()
 print(sec) -- 0.0
+print(deadl:is_done()) -- true
 ```
 
 
@@ -192,5 +195,13 @@ get the remaining time of the deadline.
 
 **Returns**
 
-- `sec:number`: the remaining time until the deadline　in seconds.
+- `sec:number`: the remaining time until the deadline in seconds.
 
+
+## done = deadline:is_done()
+
+check whether the deadline has expired.
+
+**Returns**
+
+- `done:boolean`: `true` if the deadline has expired, otherwise `false`.
