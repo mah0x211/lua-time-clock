@@ -1,3 +1,4 @@
+rockspec_format = "3.0"
 package = "time-clock"
 version = "dev-1"
 source = {
@@ -14,8 +15,10 @@ dependencies = {
     "errno >= 0.3.0",
     "lauxhlib >= 0.5.0",
 }
+build_dependencies = {
+    "luarocks-build-hooks >= 0.6.0",
+}
 build = {
-    type = "make",
     platforms = {
         linux = {
             build_variables = {
@@ -23,18 +26,22 @@ build = {
             },
         },
     },
-    build_variables = {
-        SRCDIR = "src",
-        CFLAGS = "$(CFLAGS)",
-        WARNINGS = "-Wall -Wno-trigraphs -Wmissing-field-initializers -Wreturn-type -Wmissing-braces -Wparentheses -Wno-switch -Wunused-function -Wunused-label -Wunused-parameter -Wunused-variable -Wunused-value -Wuninitialized -Wunknown-pragmas -Wshadow -Wsign-compare",
-        CPPFLAGS = "-I$(LUA_INCDIR)",
-        LDFLAGS = "$(LIBFLAG)",
-        LIB_EXTENSION = "$(LIB_EXTENSION)",
-        TIME_CLOCK_COVERAGE = "$(TIME_CLOCK_COVERAGE)",
+    type = "hooks",
+    before_build = {
+        "$(extra-vars)",
+        "$(configh)",
     },
-    install_variables = {
-        SRCDIR = "src",
-        INST_LIBDIR = "$(LIBDIR)",
-        LIB_EXTENSION = "$(LIB_EXTENSION)",
+    extra_variables = {
+        CFLAGS = "-Wall -Wno-trigraphs -Wmissing-field-initializers -Wreturn-type -Wmissing-braces -Wparentheses -Wno-switch -Wunused-function -Wunused-label -Wunused-parameter -Wunused-variable -Wunused-value -Wuninitialized -Wunknown-pragmas -Wshadow -Wsign-compare",
+    },
+    conditional_variables = {
+        TIME_CLOCK_COVERAGE = {
+            CFLAGS = "--coverage",
+            LIBFLAG = "--coverage",
+        },
+    },
+    modules = {
+        ["time.clock"] = "src/clock.c",
+        ["time.clock.deadline"] = "src/deadline.c",
     },
 }
