@@ -198,10 +198,12 @@ get the remaining time of the deadline.
 - `sec:number`: the remaining time until the deadline in seconds.
 
 
-## done = deadline:is_done()
+## done, remain = deadline:is_done()
 
 check whether the deadline has expired.
 
 **Returns**
 
 - `done:boolean`: `true` if the deadline has expired, otherwise `false`.
+- `remain:number`: the remaining time until the deadline in seconds.
+

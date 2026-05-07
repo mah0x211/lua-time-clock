@@ -51,8 +51,10 @@ static inline double get_delta(clock_deadline_t *d)
 static int is_done_lua(lua_State *L)
 {
     clock_deadline_t *d = luaL_checkudata(L, 1, MODULE_MT);
-    lua_pushboolean(L, !get_delta(d));
-    return 1;
+    double delta        = get_delta(d);
+    lua_pushboolean(L, !delta);
+    lua_pushnumber(L, delta);
+    return 2;
 }
 
 static int remain_lua(lua_State *L)
