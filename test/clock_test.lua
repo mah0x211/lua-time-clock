@@ -116,10 +116,12 @@ local function test_deadline()
     assert.equal(deadl:time(), t)
 
     -- test that return false for is_done() before remaining time is elapsed
-    assert.is_false(deadl:is_done())
+    local done, remain = deadl:is_done()
+    assert.is_false(done)
+    assert.greater(remain, 0)
 
     -- test that deadline:remain() returns a remain duration of deadline
-    local remain = assert(deadl:remain())
+    remain = assert(deadl:remain())
     assert.greater(remain, 1.8)
 
     -- test that deadline:remain() is greater than 0.1 after sleep 1.3 sec
@@ -133,7 +135,9 @@ local function test_deadline()
     assert.equal(remain, 0)
 
     -- test that return true for is_done() after remaining time is elapsed
-    assert.is_true(deadl:is_done())
+    done, remain = deadl:is_done()
+    assert.is_true(done)
+    assert.equal(remain, 0)
 end
 
 for name, f in pairs({
